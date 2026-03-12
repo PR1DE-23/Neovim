@@ -14,6 +14,7 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = false
 opt.mouse = "a"
+opt.wrap = false
 opt.clipboard = "unnamedplus"
 opt.termguicolors = true
 vim.g.clipboard = {

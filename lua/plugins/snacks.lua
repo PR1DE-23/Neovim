@@ -3,10 +3,20 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    -- dashboard = { enabled = true },
+    bigfile = { enabled = true },
     explorer = { enabled = true },
-    picker = { enabled = true },
     statuscolumn = { enabled = true },
     indent = { enabled = true },
+    words = { enabled = true },
+    picker = { 
+      enabled = true,
+      sources = {
+        explorer = {
+          layout = { layout = { position = "right" } }
+        }
+      }
+    },
   },
   keys = {
     { 
