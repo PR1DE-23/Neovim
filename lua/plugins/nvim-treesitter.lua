@@ -1,27 +1,50 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "master",
-  lazy = false,
+  event = { 'BufReadPost', 'BufNewFile' },
   build = ":TSUpdate",
-  config = function()
-    require"nvim-treesitter.configs".setup {
-      ensure_installed = {
-        "html",
-        "css",
-        "typescript",
-        "lua",
-        "tsx",
-        "javascript",
-        "bash",
-        "astro",
-        "tsx",
-      },
-      sync_install = false,
-      autoinstall = true,
-      highlight = {
+  main = 'nvim-treesitter.configs',
+  dependencies = {
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      branch = 'master',
+    }
+  },
+  opts = {
+    ensure_installed = {
+      "lua",
+      "luadoc",
+      "markdown",
+      "html",
+      "css",
+      "scss",
+      "json",
+      "typescript",
+      "tsx",
+      "javascript",
+      "bash",
+      "astro",
+      "tsx",
+    },
+    sync_install = false,
+    autoinstall = true,
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+    textobjects = {
+      select = {
         enable = true,
-        additional_vim_regex_highlighting = false,
+        lookahead = true,
+        keymaps = {
+          ["af"] = '@function.outer',
+          ["if"] = '@function.inner',
+          ["ac"] = '@conditional.outer',
+          ["ic"] = '@conditional.inner',
+          ["al"] = '@loop.outer',
+          ["il"] = '@loop.inner',
+        }
       }
     }
-  end
+  }
 }
