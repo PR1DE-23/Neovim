@@ -3,23 +3,28 @@ vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
 local servers = {
   html = {
     cmd = {"vscode-html-language-server", "--stdio"},
-    root = {"package.json", "index.html"}
+    root = {"package.json", "index.html"},
+    filetypes = {"html", "astro"}
   },
   cssls = {
     cmd = {"vscode-css-language-server", "--stdio"},
-    root = {"package.json"}
+    root = {"package.json"},
+    filetypes = {"css", "scss"}
   },
   jsonls = {
     cmd = {"vscode-json-language-server", "--stdio"},
-    root = {"package.json"}
+    root = {"package.json"},
+    filetypes = {"json"}
   },
   emmet_ls = {
     cmd = {"emmet-ls", "--stdio"},
-    root = {"package.json", ".git"}
+    root = {"package.json", ".git"},
+    filetypes = {"html", "css", "scss"}
   },
   astro = {
     cmd = { "astro-ls", "--stdio" },
     root = { "astro.config.js", "astro.config.mjs", "astro.config.js" },
+    filetypes = {"astro"},
     init_options = {
       typescript = {
         tsdk = vim.fn.expand('$HOME/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib')
@@ -28,19 +33,23 @@ local servers = {
   },
   tailwindcss = {
     cmd = {"tailwindcss-language-server", "--stdio"},
-    root = {"tailwind.config.js", "tailwind.config.ts", "postcss.config.js"}
+    root = {"tailwind.config.js", "tailwind.config.ts", "postcss.config.js"},
+    filetypes = {"html", "css", "javascript", "typescript", "vue"}
   },
   ts_ls = {
     cmd = {"typescript-language-server", "--stdio"},
-    root = {"tsconfig.json", "jsconfig.json", "package.json"}
+    root = {"tsconfig.json", "jsconfig.json", "package.json"},
+    filetypes = {"typescript", "javascript", "typescriptreact", "javascriptreact"}
   },
   marksman = {
     cmd = {"marksman", "server"},
-    root = {"marksman.toml", ".git"}
+    root = {"marksman.toml", ".git"},
+    filetypes = {"markdown"}
   },
   lua_ls = {
     cmd = {"lua-language-server"},
     root = {".luarc.json", "init.lua"},
+    filetypes = {"lua"},
     settings = {
       Lua = {
         diagnostics = {
@@ -54,30 +63,17 @@ local servers = {
   }
 }
 
-local filetypes = {
-  html = { 'html', 'astro' },
-  cssls = { 'css', 'scss' },
-  jsonls = { 'json' },
-  emmet_ls = { 'html', 'css', 'scss' },
-  astro = { 'astro' },
-  tailwindcss = { 'html', 'css', 'javascript', 'typescript', 'vue' },
-  ts_ls = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
-  marksman = { 'markdown' },
-  lua_ls = { 'lua' }
-}
-
 for name, config in pairs(servers) do
-  if vim.tbl_contains(filetypes[name] or {}, vim.bo.filetype) then
-    local root_dir = vim.fs.root(0, config.root)
-    if root_dir then
-      vim.lsp.config(name, {
-        cmd = config.cmd,
-        root_dir = root_dir,
-        init_options = config.init_options,
-        settings = config.settings
-      })
-      vim.lsp.enable(name)
-    end
+  local root_dir = vim.fs.root(0, config.root)
+  if root_dir then
+    vim.lsp.config(name, {
+      cmd = config.cmd,
+      root_dir = root_dir,
+      filetypes = config.filetypes,
+      init_options = config.init_options,
+      settings = config.settings
+    })
+    vim.lsp.enable(name)
   end
 end
 

@@ -4,6 +4,7 @@ return {
   lazy = false,
   opts = {
     -- dashboard = { enabled = true },
+    scroll = { enabled = true },
     bigfile = { enabled = true },
     explorer = { enabled = true },
     statuscolumn = { enabled = true },
