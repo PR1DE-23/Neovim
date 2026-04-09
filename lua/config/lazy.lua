@@ -21,5 +21,8 @@ require("lazy").setup({
   checker = {
     enabled = true,
     notify = false
-  }
+  },
+  rocks = {
+    enabled = false
+  },
 })

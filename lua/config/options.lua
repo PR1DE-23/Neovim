@@ -16,6 +16,7 @@ opt.hlsearch = false
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.termguicolors = true
+opt.swapfile = false
 vim.diagnostic.config({
   virtual_text = true
 })
@@ -31,3 +32,9 @@ vim.g.clipboard = {
   },
   cache_enabled = false,
 }
+
+-- Desactivar proveedores heredados para acelerar el inicio y limpiar checkhealth
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0

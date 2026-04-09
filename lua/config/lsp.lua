@@ -1,5 +1,3 @@
-vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
-
 local servers = {
   html = {
     cmd = {"vscode-html-language-server", "--stdio"},
@@ -21,13 +19,18 @@ local servers = {
     root = {"package.json", ".git"},
     filetypes = {"html", "css", "scss"}
   },
+  eslint = {
+    cmd = { "vscode-eslint-language-server", "--stdio" },
+    root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs"},
+    filetypes = { "javascript", "typescript", "astro" }
+  },
   astro = {
     cmd = { "astro-ls", "--stdio" },
     root = { "astro.config.js", "astro.config.mjs", "astro.config.js" },
     filetypes = {"astro"},
     init_options = {
       typescript = {
-        tsdk = vim.fn.expand('$HOME/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib')
+        tsdk = vim.fn.trim(vim.fn.system("pnpm root -g")) .. "/typescript/lib"
       }
     }
   },
@@ -41,10 +44,20 @@ local servers = {
     root = {"tsconfig.json", "jsconfig.json", "package.json"},
     filetypes = {"typescript", "javascript", "typescriptreact", "javascriptreact"}
   },
-  marksman = {
-    cmd = {"marksman", "server"},
-    root = {"marksman.toml", ".git"},
+  markdown_oxide = {
+    cmd = {"markdown-oxide"},
+    root = {".git", ".obsidian", "marksman.toml"},
     filetypes = {"markdown"}
+  },
+  bashls = {
+    cmd = { "bash-language-server", "start" },
+    root = { ".git" },
+    filetypes = { "sh", "zsh", "bash" }
+  },
+  yamlls = {
+    cmd = { "yaml-language-server", "--stdio" },
+    root = { ".git" },
+    filetypes = { "yaml" }
   },
   lua_ls = {
     cmd = {"lua-language-server"},
@@ -78,7 +91,7 @@ for name, config in pairs(servers) do
 end
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
   virtual_lines = false,
   underline = true,
   signs = {
