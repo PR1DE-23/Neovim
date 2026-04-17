@@ -13,7 +13,19 @@ return {
       enabled = true,
       sources = {
         explorer = {
-          layout = { layout = { position = "right" } }
+          layout = {
+            layout = {
+              position = "float",
+              row = 1,
+              col = 999,
+              border = "left",
+              width = 35,
+              height = vim.o.lines - 3,
+              box = "vertical",
+              { win = "input", height = 1,     border = "bottom" },
+              { win = "list",  border = "none" },
+            }
+          }
         }
       }
     },
