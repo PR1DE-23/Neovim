@@ -1,33 +1,33 @@
 local servers = {
   html = {
-    cmd = {"vscode-html-language-server", "--stdio"},
-    root = {"package.json", "index.html"},
-    filetypes = {"html", "astro"}
+    cmd = { "vscode-html-language-server", "--stdio" },
+    root = { "package.json", "index.html" },
+    filetypes = { "html", "astro" }
   },
   cssls = {
-    cmd = {"vscode-css-language-server", "--stdio"},
-    root = {"package.json"},
-    filetypes = {"css", "scss"}
+    cmd = { "vscode-css-language-server", "--stdio" },
+    root = { "package.json" },
+    filetypes = { "css", "scss" }
   },
   jsonls = {
-    cmd = {"vscode-json-language-server", "--stdio"},
-    root = {"package.json"},
-    filetypes = {"json"}
+    cmd = { "vscode-json-language-server", "--stdio" },
+    root = { "package.json" },
+    filetypes = { "json" }
   },
   emmet_ls = {
-    cmd = {"emmet-ls", "--stdio"},
-    root = {"package.json", ".git"},
-    filetypes = {"html", "css", "scss"}
+    cmd = { "emmet-ls", "--stdio" },
+    root = { "package.json", ".git" },
+    filetypes = { "html", "css", "scss" }
   },
   eslint = {
     cmd = { "vscode-eslint-language-server", "--stdio" },
-    root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs"},
+    root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs" },
     filetypes = { "javascript", "typescript", "astro" }
   },
   astro = {
     cmd = { "astro-ls", "--stdio" },
     root = { "astro.config.js", "astro.config.mjs", "astro.config.js" },
-    filetypes = {"astro"},
+    filetypes = { "astro" },
     init_options = {
       typescript = {
         tsdk = vim.fn.trim(vim.fn.system("pnpm root -g")) .. "/typescript/lib"
@@ -35,19 +35,19 @@ local servers = {
     }
   },
   tailwindcss = {
-    cmd = {"tailwindcss-language-server", "--stdio"},
-    root = {"tailwind.config.js", "tailwind.config.ts", "postcss.config.js"},
-    filetypes = {"html", "css", "javascript", "typescript", "vue"}
+    cmd = { "tailwindcss-language-server", "--stdio" },
+    root = { "tailwind.config.js", "tailwind.config.ts", "postcss.config.js" },
+    filetypes = { "html", "css", "javascript", "typescript", "vue" }
   },
   ts_ls = {
-    cmd = {"typescript-language-server", "--stdio"},
-    root = {"tsconfig.json", "jsconfig.json", "package.json"},
-    filetypes = {"typescript", "javascript", "typescriptreact", "javascriptreact"}
+    cmd = { "typescript-language-server", "--stdio" },
+    root = { "tsconfig.json", "jsconfig.json", "package.json" },
+    filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" }
   },
   markdown_oxide = {
-    cmd = {"markdown-oxide"},
-    root = {".git", ".obsidian", "marksman.toml"},
-    filetypes = {"markdown"}
+    cmd = { "markdown-oxide" },
+    root = { ".git", ".obsidian", "marksman.toml" },
+    filetypes = { "markdown" }
   },
   bashls = {
     cmd = { "bash-language-server", "start" },
@@ -60,9 +60,9 @@ local servers = {
     filetypes = { "yaml" }
   },
   lua_ls = {
-    cmd = {"lua-language-server"},
-    root = {".luarc.json", "init.lua"},
-    filetypes = {"lua"},
+    cmd = { "lua-language-server" },
+    root = { ".luarc.json", "init.lua" },
+    filetypes = { "lua" },
     settings = {
       Lua = {
         diagnostics = {
