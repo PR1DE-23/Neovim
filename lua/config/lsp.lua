@@ -30,7 +30,7 @@ local servers = {
     filetypes = { "astro" },
     init_options = {
       typescript = {
-        tsdk = vim.fn.trim(vim.fn.system("pnpm root -g")) .. "/typescript/lib"
+        tsdk = os.getenv("PNPM_HOME") .. "/global/5/node_modules/typescript/lib"
       }
     }
   },
@@ -77,17 +77,14 @@ local servers = {
 }
 
 for name, config in pairs(servers) do
-  local root_dir = vim.fs.root(0, config.root)
-  if root_dir then
-    vim.lsp.config(name, {
-      cmd = config.cmd,
-      root_dir = root_dir,
-      filetypes = config.filetypes,
-      init_options = config.init_options,
-      settings = config.settings
-    })
-    vim.lsp.enable(name)
-  end
+  vim.lsp.config(name, {
+    cmd = config.cmd,
+    root_markers = config.root,
+    filetypes = config.filetypes,
+    init_options = config.init_options,
+    settings = config.settings
+  })
+  vim.lsp.enable(name)
 end
 
 vim.diagnostic.config({

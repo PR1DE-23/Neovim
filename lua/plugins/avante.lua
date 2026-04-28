@@ -1,7 +1,6 @@
 return {
   "yetone/avante.nvim",
-  event = "VeryLazy",
-  lazy = false,
+  cmd = { "AvantaChat", "AvanteAsk" },
   version = false, -- Usar la última versión para tener correcciones de ARM64
   opts = {
     provider = "gemini",

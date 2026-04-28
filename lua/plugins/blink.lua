@@ -1,5 +1,6 @@
 return {
   'saghen/blink.cmp',
+  event = "InsertEnter",
   dependencies = { 'rafamadriz/friendly-snippets' },
   version = '1.*',
   opts = {
@@ -10,7 +11,7 @@ return {
     completion = {
       documentation = {
         auto_show = true
-      } 
+      }
     },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' }
@@ -18,4 +19,4 @@ return {
     fuzzy = { implementation = 'prefer_rust_with_warning' },
   },
   opts_extend = { 'sources.default' }
-} 
+}
