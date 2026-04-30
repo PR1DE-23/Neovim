@@ -19,11 +19,11 @@ local servers = {
     root = { "package.json", ".git" },
     filetypes = { "html", "css", "scss" }
   },
-  eslint = {
-    cmd = { "vscode-eslint-language-server", "--stdio" },
-    root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs" },
-    filetypes = { "javascript", "typescript", "astro" }
-  },
+  --eslint = {
+  --cmd = { "vscode-eslint-language-server", "--stdio" },
+  --root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs" },
+  --filetypes = { "javascript", "typescript", "astro" }
+  --},
   astro = {
     cmd = { "astro-ls", "--stdio" },
     root = { "astro.config.js", "astro.config.mjs", "astro.config.js" },
