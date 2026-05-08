@@ -76,13 +76,16 @@ local servers = {
   }
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
 for name, config in pairs(servers) do
   vim.lsp.config(name, {
     cmd = config.cmd,
     root_markers = config.root,
     filetypes = config.filetypes,
     init_options = config.init_options,
-    settings = config.settings
+    settings = config.settings,
+    capabilities = capabilities,
   })
   vim.lsp.enable(name)
 end

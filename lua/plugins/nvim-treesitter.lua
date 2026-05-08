@@ -11,10 +11,6 @@ return {
   },
   opts = {
     ensure_installed = {
-      "lua",
-      "luadoc",
-      "markdown",
-      "html",
       "css",
       "scss",
       "json",
