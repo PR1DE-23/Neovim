@@ -2,17 +2,33 @@ local servers = {
   html = {
     cmd = { "vscode-html-language-server", "--stdio" },
     root = { "package.json", "index.html" },
-    filetypes = { "html", "astro" }
+    filetypes = { "html", "astro" },
+    init_options = {
+      configurationSection = { "html", "css", "javascript" },
+      embeddedLanguages = { css = true, javascript = true },
+      provideFormatter = true,
+    },
+    settings = {
+      html = { validate = true }
+    }
   },
   cssls = {
     cmd = { "vscode-css-language-server", "--stdio" },
     root = { "package.json" },
-    filetypes = { "css", "scss" }
+    filetypes = { "css", "scss", "html" },
+    settings = {
+      css = { validate = true }
+    }
   },
   jsonls = {
     cmd = { "vscode-json-language-server", "--stdio" },
     root = { "package.json" },
-    filetypes = { "json" }
+    filetypes = { "json" },
+    settings = {
+      json = {
+        validate = { enable = true }
+      }
+    }
   },
   emmet_ls = {
     cmd = { "emmet-ls", "--stdio" },
@@ -24,6 +40,11 @@ local servers = {
   --root = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs" },
   --filetypes = { "javascript", "typescript", "astro" }
   --},
+  ruff = {
+    cmd = { "ruff", "server" },
+    root = { "pyproject.toml", "setup.py", "requirements.txt", ".git" },
+    filetypes = { "python" }
+  },
   astro = {
     cmd = { "astro-ls", "--stdio" },
     root = { "astro.config.js", "astro.config.mjs", "astro.config.js" },
@@ -73,19 +94,28 @@ local servers = {
         }
       }
     }
-  }
+  },
+  csharp_ls = {
+    cmd = { "csharp-language-server" }, -- Comando base
+    root = { ".git", "bin", "obj" },
+    filetypes = { "cs" }
+  },
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 for name, config in pairs(servers) do
+  local final_cmd = config.cmd
+  if name == "csharp_ls" then
+    local current_slnx = vim.fs.find(function(n) return n:match("%.slnx$") end, { upward = true, limit = 1 })[1]
+    if current_slnx then
+      final_cmd = { "csharp-language-server", "--solution-path", current_slnx }
+    end
+  end
   vim.lsp.config(name, {
-    cmd = config.cmd,
+    cmd = final_cmd,
     root_markers = config.root,
     filetypes = config.filetypes,
     init_options = config.init_options,
     settings = config.settings,
-    capabilities = capabilities,
   })
   vim.lsp.enable(name)
 end
