@@ -1,14 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   event = { 'BufReadPost', 'BufNewFile' },
-  build = ":TSUpdate",
-  main = 'nvim-treesitter.configs',
-  dependencies = {
-    {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      branch = 'master',
-    }
-  },
+  build = false,
   opts = {
     ensure_installed = {
       "css",

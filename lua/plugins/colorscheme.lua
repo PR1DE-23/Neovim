@@ -8,7 +8,7 @@ return {
       compile = false,
       undercurl = true,
       commentStyle = { italic = false },
-      functionStyle = {},
+      functionStyle = { italic = false },
       keywordStyle = { italic = false },
       statementStyle = { bold = false },
       typeStyle = {},
