@@ -102,6 +102,36 @@ local servers = {
   },
 }
 
+-- Interceptar y limpiar el texto de las ventanas de información (Hover)
+local default_hover_handler = vim.lsp.handlers["textDocument/hover"]
+
+vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+  if result and result.contents then
+    -- Función para colapsar 3 o más saltos de línea consecutivos en solo 2
+    local function clean_newlines(str)
+      return str:gsub("\n\n\n+", "\n\n")
+    end
+
+    -- El protocolo LSP puede enviar el contenido de 3 formas distintas, cubrimos todas:
+    if type(result.contents) == "string" then
+      result.contents = clean_newlines(result.contents)
+    elseif type(result.contents) == "table" and result.contents.value then
+      result.contents.value = clean_newlines(result.contents.value)
+    elseif type(result.contents) == "table" then
+      for i, v in ipairs(result.contents) do
+        if type(v) == "string" then
+          result.contents[i] = clean_newlines(v)
+        elseif type(v) == "table" and v.value then
+          v.value = clean_newlines(v.value)
+        end
+      end
+    end
+  end
+
+  -- Pasamos el resultado ya limpio al motor original de Neovim
+  return default_hover_handler(err, result, ctx, config)
+end
+
 for name, config in pairs(servers) do
   local final_cmd = config.cmd
   if name == "csharp_ls" then
@@ -110,19 +140,37 @@ for name, config in pairs(servers) do
       final_cmd = { "csharp-language-server", "--solution-path", current_slnx }
     end
   end
+
+  local custom_on_init = function(client, initialize_result)
+    -- Si el servidor ya traía un on_init, lo ejecutamos
+    if config.on_init then
+      config.on_init(client, initialize_result)
+    end
+
+    -- FIX CORREGIDO: Sanitizamos la tabla en lugar de convertirla a booleano
+    local diag_cap = client.server_capabilities.diagnosticProvider
+    if type(diag_cap) == "table" then
+      -- Si documentSelector es el objeto vim.NIL de JSON, lo borramos usando el nil nativo de Lua
+      if diag_cap.documentSelector == vim.NIL then
+        diag_cap.documentSelector = nil
+      end
+    end
+  end
   vim.lsp.config(name, {
     cmd = final_cmd,
     root_markers = config.root,
     filetypes = config.filetypes,
     init_options = config.init_options,
     settings = config.settings,
+    on_init = custom_on_init, -- Inyectamos nuestra función aquí
   })
   vim.lsp.enable(name)
 end
 
+
 vim.diagnostic.config({
   virtual_text = false,
-  virtual_lines = false,
+  virtual_lines = true,
   underline = true,
   signs = {
     text = {

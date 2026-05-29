@@ -42,8 +42,3 @@ vim.g.clipboard               = {
   },
   cache_enabled = true,
 }
-
--- DIAGNÓSTICOS (Errores de código)
-vim.diagnostic.config({
-  virtual_text = false
-})
