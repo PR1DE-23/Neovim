@@ -1,6 +1,10 @@
+-- Navegar entre pestañas de izquierda a derecha con Tab y Shift+Tab
+vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { silent = true })
+vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { silent = true })
+
 -- NAVEGACIÓN DE BUFFERS
-vim.keymap.set('n', 'gb', ':bn<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', 'gB', ':bp<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', 'gb', ':bn<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', 'gB', ':bp<CR>', { noremap = true, silent = true })
 
 -- PORTAPAPELES (Sincronización manual con el sistema)
 -- "y" normal copiará al registro interno de Neovim (instantáneo)
